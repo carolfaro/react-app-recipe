@@ -1,5 +1,10 @@
 .app-all {
-  max-width: 360px;
   max-height: 460px;
+  max-width: 360px;
 }
 
+.login-all {
+  background-image: url('https://thypix.com/wp-content/uploads/2021/04/minimal-wallpaper-for-smartphone-full-61-700x1400.jpg');
+  height: 460px;
+  width: 360px;
+}

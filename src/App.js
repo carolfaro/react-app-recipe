@@ -2,6 +2,8 @@ import React from 'react';
 import { Route, Switch } from 'react-router';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import Favorites from './pages/Favorites';
+import Perfil from './pages/Perfil';
 import './App.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
