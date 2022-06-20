@@ -12,12 +12,19 @@ function App() {
     <div className="app-all">
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route path="/home" component={ Home } />
-        <Route path="/favorites" component={ Favorites } />
-        <Route path="/perfil" component={ Perfil } />
+        <Route path="/foods" component={ Home } />
+        <Route path="/drinks" component={ Home } />
+        <Route path="/explore" component={ Home } />
+        <Route path="/explore/foods" component={ Home } />
+        <Route path="/explore/drinks" component={ Home } />
+        <Route path="/explore/foods/ingredients" component={ Home } />
+        <Route path="/explore/drinks/ingredients" component={ Home } />
+        <Route path="/explore/foods/nationalities" component={ Home } />
+        <Route path="/done-recipes" component={ Home } />
+        <Route path="/favorite-recipes" component={ Favorites } />
+        <Route path="/profile" component={ Perfil } />
       </Switch>
     </div>
-
   );
 }
 
