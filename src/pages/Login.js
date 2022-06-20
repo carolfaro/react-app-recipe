@@ -1,25 +1,49 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import GlobalContext from '../contex/GlobalContext';
 
 function Login() {
+  const [checkLogin, setCheckLogin] = useState(true);
+
   const {
     email,
     setEmail,
-    setUser,
     password,
     setPassword,
   } = useContext(GlobalContext);
   const history = useHistory();
 
-  const handleClick = () => {
-    setUser({ email, password });
-    history.push('/home');
+  const setLocalStorageLogin = () => {
+    localStorage.setItem('mealsToken', '1');
+    localStorage.setItem('cocktailsToken', '1');
+    localStorage.setItem('user', JSON.stringify({ email }));
   };
+
+  const handleClick = () => {
+    setLocalStorageLogin();
+    history.push('/foods');
+  };
+
+  useEffect(() => {
+    const MIN_PASSWORD = 7;
+    const buttonChange = () => {
+      if (email.includes('@')
+        && email.endsWith('.com')
+        && password.length >= MIN_PASSWORD) {
+        setCheckLogin(false);
+      } else {
+        setCheckLogin(true);
+      }
+    };
+
+    buttonChange();
+  }, [email, password]);
 
   return (
     <div className="login-all">
-      <form>
+      <fieldset className="login-form">
+        <legend>Login</legend>
+
         <label htmlFor="email">
           Email:
           <input
@@ -43,13 +67,14 @@ function Login() {
         </label>
 
         <button
+          disabled={ checkLogin }
           type="button"
           data-testid="login-submit-btn"
           onClick={ handleClick }
         >
           Enter
         </button>
-      </form>
+      </fieldset>
     </div>
   );
 }
