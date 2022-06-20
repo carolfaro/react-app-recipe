@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
