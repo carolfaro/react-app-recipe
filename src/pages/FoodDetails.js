@@ -7,6 +7,7 @@ export default function FoodDetails() {
   const params = useParams();
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
+  const [measureList, setMeasureList] = useState([]);
 
   useEffect(() => {
     const id = Object.values(params)[0];
@@ -25,6 +26,7 @@ export default function FoodDetails() {
   useEffect(() => {
     const ingredients = Object.entries(recipe);
     const newIngredientsList = [];
+    const newMeasureList = [];
 
     ingredients.forEach((item) => {
       if (item[0].includes('strIngredient')) {
@@ -32,6 +34,13 @@ export default function FoodDetails() {
       }
     });
 
+    ingredients.forEach((item) => {
+      if (item[0].includes('strMeasure')) {
+        newMeasureList.push(item[1]);
+      }
+    });
+
+    setMeasureList(newMeasureList);
     setIngredientList(newIngredientsList);
   }, [recipe]);
 
@@ -39,7 +48,7 @@ export default function FoodDetails() {
     <main>
       <img src={ recipe.strMealThumb } data-testid="recipe-photo" alt="#" />
       <div>
-        <h1 data-testid="recipe-title">Food Title</h1>
+        <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
         <button
           type="button"
           data-testid="share-btn"
@@ -63,7 +72,7 @@ export default function FoodDetails() {
               key={ index }
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              {ingredient}
+              {`${ingredient} - ${measureList[index]}`}
             </li>
           ))}
         </ul>
