@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './Header.css';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
+import GlobalContext from '../contex/GlobalContext';
 
 function Header({ title, showBt }) {
   const [able, setAble] = useState(false);
+  const { setInputSearchBar } = useContext(GlobalContext);
 
   return (
     <header className="main-header">
@@ -42,6 +44,7 @@ function Header({ title, showBt }) {
             type="text"
             placeholder="Search Recipe"
             data-testid="search-input"
+            onChange={ ({ target }) => setInputSearchBar(target.value) }
           />
           <SearchBar />
         </div>)}

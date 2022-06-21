@@ -5,15 +5,52 @@ import GlobalContext from './GlobalContext';
 function GlobalProvider({ children }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser] = useState({});
+  const [inputSearchBar, setInputSearchBar] = useState('');
+  const [radioValue, setRadioValue] = useState('ingredientV');
+  const [returnAPI, setReturnAPI] = useState({});
+
+  const firstNameLetterMeal = async (letter) => {
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`;
+    const data = await fetch(url).then((response) => response.json());
+    setReturnAPI(data);
+  };
+
+  const searchMealName = async (names) => {
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${names}`;
+    const data = await fetch(url).then((response) => response.json());
+    setReturnAPI(data);
+  };
+
+  const ingredientsMeal = async (ingredients) => {
+    const url = `https://www.themealdb.com/api/json/v1/1/list.php?i=${ingredients}`;
+    const data = await fetch(url).then((response) => response.json());
+    setReturnAPI(data);
+  };
+
+  const buttonSearchBar = () => {
+    if (radioValue === 'ingredientV') {
+      firstNameLetterMeal(inputSearchBar);
+      console.log('Ingrediente');
+    } else if (radioValue === 'nameV') {
+      searchMealName(inputSearchBar);
+      console.log('Name');
+    } else {
+      ingredientsMeal(inputSearchBar);
+      console.log('Letter');
+    }
+  };
 
   const contextValue = {
-    user,
-    setUser,
     email,
     setEmail,
     password,
     setPassword,
+    inputSearchBar,
+    setInputSearchBar,
+    radioValue,
+    setRadioValue,
+    buttonSearchBar,
+    returnAPI,
   };
 
   return (

@@ -2,70 +2,55 @@ import React, { useContext } from 'react';
 import GlobalContext from '../contex/GlobalContext';
 
 function SearchBar() {
-  const { ingredients, searchName, searchFirstName } = useContext(GlobalContext);
-  console.log(searchFirstName);
+  const {
+    setRadioValue,
+    buttonSearchBar,
+  } = useContext(GlobalContext);
 
   return (
     <main>
       <form>
-        {/* <button
-          type="submit"
-          data-testid="profile-top-btn"
-        >
-          botão 1
-
-        </button>
-        <button
-          type="submit"
-          data-testid="page-title"
-        >
-          botão 2
-
-        </button>
-        <button
-          type="submit"
-          data-testid="search-top-btn"
-        >
-          botão 3
-
-        </button> */}
-        {/* <input
-          type="text"
-          data-testid="search-input"
-          name="value"
-        />
-        <p> só vale a partir daqui_ carol</p> */}
-        <label htmlFor="html">
+        <label htmlFor="ingredient">
           <input
+            id="ingredient"
             type="radio"
             data-testid="ingredient-search-radio"
             name="search-radio"
-            value="carol"
-            onChange={ () => ingredients }
+            checked
+            onChange={ () => setRadioValue('ingredientV') }
           />
           Ingrediente
         </label>
-        <label htmlFor="html">
 
+        <label htmlFor="nameS">
           <input
+            id="nameS"
             type="radio"
             data-testid="name-search-radio"
             name="search-radio"
-            onChange={ () => searchName }
+            onChange={ () => setRadioValue('nameV') }
           />
           Nome
         </label>
-        <label htmlFor="html">
 
+        <label htmlFor="letter">
           <input
+            id="letter"
             type="radio"
             data-testid="first-letter-search-radio"
             name="search-radio"
-            onChange={ () => searchFirstName }
+            onChange={ () => setRadioValue('letterV') }
           />
           Primeira letra
         </label>
-        <button type="submit" data-testid="exec-search-btn">Busca</button>
+
+        <button
+          type="submit"
+          data-testid="exec-search-btn"
+          onClick={ () => buttonSearchBar() }
+        >
+          Search
+        </button>
       </form>
     </main>
   );
