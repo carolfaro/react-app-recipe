@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
-export default function FoodDetails() {
+export default function DrinkDetails() {
   const params = useParams();
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
@@ -12,11 +12,11 @@ export default function FoodDetails() {
     const id = Object.values(params)[0];
 
     const requestRecipe = async () => {
-      const API_URL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+      const API_URL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
       const result = await fetch(API_URL);
       const data = await result.json();
-
-      setRecipe(data.meals[0]);
+      console.log(data.drinks[0]);
+      setRecipe(data.drinks[0]);
     };
 
     requestRecipe();
@@ -37,9 +37,9 @@ export default function FoodDetails() {
 
   return (
     <main>
-      <img src={ recipe.strMealThumb } data-testid="recipe-photo" alt="#" />
+      <img src={ recipe.strDrinkThumb } data-testid="recipe-photo" alt="#" />
       <div>
-        <h1 data-testid="recipe-title">Food Title</h1>
+        <h1 data-testid="recipe-title">Drink Title</h1>
         <button
           type="button"
           data-testid="share-btn"
@@ -72,14 +72,6 @@ export default function FoodDetails() {
           <span data-testid="instructions">
             {recipe.strInstructions}
           </span>
-        </div>
-        <div>
-          <h2>Video</h2>
-          <iframe
-            data-testid="video"
-            src={ recipe.strYoutube }
-            title="video"
-          />
         </div>
         <div>
           <h2>Recommended</h2>
