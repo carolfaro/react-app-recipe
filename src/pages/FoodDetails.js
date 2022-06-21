@@ -29,7 +29,8 @@ export default function FoodDetails() {
     const newMeasureList = [];
 
     ingredients.forEach((item) => {
-      if (item[0].includes('strIngredient')) {
+      if (item[0].includes('strIngredient')
+        && (typeof item[1]) === 'string' && item[1].length > 0) {
         newIngredientsList.push(item[1]);
       }
     });
