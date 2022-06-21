@@ -16,7 +16,6 @@ function SearchBar() {
             type="radio"
             data-testid="ingredient-search-radio"
             name="search-radio"
-            checked
             onChange={ () => setRadioValue('ingredientV') }
           />
           Ingrediente
@@ -45,7 +44,7 @@ function SearchBar() {
         </label>
 
         <button
-          type="submit"
+          type="button"
           data-testid="exec-search-btn"
           onClick={ () => buttonSearchBar() }
         >

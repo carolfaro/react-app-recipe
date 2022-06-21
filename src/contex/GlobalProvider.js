@@ -6,7 +6,7 @@ function GlobalProvider({ children }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [inputSearchBar, setInputSearchBar] = useState('');
-  const [radioValue, setRadioValue] = useState('ingredientV');
+  const [radioValue, setRadioValue] = useState('');
   const [returnAPI, setReturnAPI] = useState({});
 
   const firstNameLetterMeal = async (letter) => {
@@ -22,21 +22,22 @@ function GlobalProvider({ children }) {
   };
 
   const ingredientsMeal = async (ingredients) => {
-    const url = `https://www.themealdb.com/api/json/v1/1/list.php?i=${ingredients}`;
+    const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredients}`;
     const data = await fetch(url).then((response) => response.json());
     setReturnAPI(data);
   };
 
   const buttonSearchBar = () => {
     if (radioValue === 'ingredientV') {
-      firstNameLetterMeal(inputSearchBar);
+      ingredientsMeal(inputSearchBar);
       console.log('Ingrediente');
     } else if (radioValue === 'nameV') {
       searchMealName(inputSearchBar);
       console.log('Name');
+    } else if (radioValue === 'letterV' && inputSearchBar.length === 1) {
+      firstNameLetterMeal(inputSearchBar);
     } else {
-      ingredientsMeal(inputSearchBar);
-      console.log('Letter');
+      global.alert('Your search must have only 1 (one) character');
     }
   };
 
