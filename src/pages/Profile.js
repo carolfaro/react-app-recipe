@@ -2,14 +2,14 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import './Profile.css';
+import './Generic.css';
 
 function Profile() {
   const history = useHistory();
   const email = JSON.parse(localStorage.getItem('user'));
 
   return (
-    <div className="profile-all">
+    <div className="generic">
       <Header title="Profile" showBt={ false } />
       <h2 data-testid="profile-email">{ `User: ${email.email}` }</h2>
 
