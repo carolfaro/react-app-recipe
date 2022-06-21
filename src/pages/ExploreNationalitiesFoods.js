@@ -1,9 +1,14 @@
 import React from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function ExploreNatFoods() {
   return (
-    <Header title="Explore Nationalities" />
+    <div>
+      <Header title="Explore Nationalities" />
+      <h1>Conteúdo</h1>
+      <Footer />
+    </div>
   );
 }
 

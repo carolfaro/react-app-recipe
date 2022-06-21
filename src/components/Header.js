@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import './Header.css';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function Header({ title, showBt }) {
   const [able, setAble] = useState(false);
 
   return (
     <header className="main-header">
-      <div>
+      <div className="header-fixed">
         <Link to="/profile">
           <img
             src={ profileIcon }
@@ -17,10 +19,12 @@ function Header({ title, showBt }) {
             data-testid="profile-top-btn"
           />
         </Link>
+
         <h1 data-testid="page-title">{title}</h1>
 
         {showBt && (
           <button
+            className="btn-search"
             type="button"
             onClick={ () => setAble(!able) }
           >
@@ -31,7 +35,6 @@ function Header({ title, showBt }) {
             />
           </button>
         )}
-
       </div>
       {able && (
         <div>
@@ -40,6 +43,7 @@ function Header({ title, showBt }) {
             placeholder="Search Recipe"
             data-testid="search-input"
           />
+          <SearchBar />
         </div>)}
     </header>
   );

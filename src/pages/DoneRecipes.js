@@ -3,7 +3,9 @@ import Header from '../components/Header';
 
 function DoneRecipes() {
   return (
-    <Header title="Done Recipes" showBt={ false } />
+    <div>
+      <Header title="Done Recipes" showBt={ false } />
+    </div>
   );
 }
 

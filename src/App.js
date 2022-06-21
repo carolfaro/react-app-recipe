@@ -19,22 +19,32 @@ import './App.css';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={ Login } />
-        <Route exact path="/foods" component={ Foods } />
-        <Route exact path="/drinks" component={ Drinks } />
-        <Route exact path="/explore" component={ Explore } />
-        <Route exact path="/explore/foods" component={ ExploreFoods } />
-        <Route exact path="/explore/drinks" component={ ExploreDrinks } />
-        <Route exact path="/explore/foods/ingredients" component={ ExploreIngsFoods } />
-        <Route exact path="/explore/drinks/ingredients" component={ ExploreIngsDrinks } />
-        <Route exact path="/explore/foods/nationalities" component={ ExploreNatFoods } />
-        <Route exact path="/done-recipes" component={ DoneRecipes } />
-        <Route exact path="/favorite-recipes" component={ Favorites } />
-        <Route exact path="/profile" component={ Profile } />
-      </Switch>
-    </BrowserRouter>
+    <div className="app">
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={ Login } />
+          <Route exact path="/foods" component={ Foods } />
+          <Route exact path="/drinks" component={ Drinks } />
+          <Route exact path="/explore" component={ Explore } />
+          <Route exact path="/explore/foods" component={ ExploreFoods } />
+          <Route exact path="/explore/drinks" component={ ExploreDrinks } />
+          <Route exact path="/explore/foods/ingredients" component={ ExploreIngsFoods } />
+          <Route
+            exact
+            path="/explore/drinks/ingredients"
+            component={ ExploreIngsDrinks }
+          />
+          <Route
+            exact
+            path="/explore/foods/nationalities"
+            component={ ExploreNatFoods }
+          />
+          <Route exact path="/done-recipes" component={ DoneRecipes } />
+          <Route exact path="/favorite-recipes" component={ Favorites } />
+          <Route exact path="/profile" component={ Profile } />
+        </Switch>
+      </BrowserRouter>
+    </div>
   );
 }
 
