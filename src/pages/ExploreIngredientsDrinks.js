@@ -17,6 +17,8 @@ function ExploreIngsDrinks() {
     ingredientsDrinks();
   }, []);
 
+
+
   return (
     <div>
       <Header title="Explore Ingredients Drinks" showBt={ false } />
@@ -29,7 +31,7 @@ function ExploreIngsDrinks() {
           >
             <img
               data-testid={ `${index}-card-img` }
-              src={ `http://www.thecocktaildb.com/images/ingredients/${ing.strIngredient1}-Small.png` }
+              src={ `https://www.thecocktaildb.com/images/ingredients/${ing.strIngredient1}-Small.png` }
               alt={ ing.strIngredient1 }
             />
             <p data-testid={ `${index}-card-name` }>{ing.strIngredient1}</p>
