@@ -6,7 +6,8 @@ import './Generic.css';
 
 function Profile() {
   const history = useHistory();
-  const email = JSON.parse(localStorage.getItem('user'));
+  const email = JSON.parse(localStorage.getItem('user'))
+  || { email: 'No one is Logged In' };
 
   return (
     <div className="generic">

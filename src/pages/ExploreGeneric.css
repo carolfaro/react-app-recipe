@@ -1,0 +1,14 @@
+.exp-ing-foods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 10px;
+}
+
+.explore-ing-container {
+  background-color: darkgrey;
+  border: solid black 1px;
+  border-radius: 20px;
+  max-width: 100px;
+  opacity: 70%;
+}
