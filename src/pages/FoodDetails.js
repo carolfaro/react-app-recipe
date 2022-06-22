@@ -6,15 +6,15 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 export default function FoodDetails() {
   const MAX_DRINKS_ITEMS = 6;
   const params = useParams();
+  const id = Object.values(params)[0];
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
   const [measureList, setMeasureList] = useState([]);
   const [drinkList, setDrinkList] = useState([]);
+  const [showStartBtn, setShowStartBtn] = useState(true);
 
   // recipe request
   useEffect(() => {
-    const id = Object.values(params)[0];
-
     const requestRecipe = async () => {
       const API_URL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
       const result = await fetch(API_URL);
@@ -23,8 +23,20 @@ export default function FoodDetails() {
       setRecipe(data.meals[0]);
     };
 
+    const handleDoneRecipes = () => {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
+      if (doneRecipes.length > 0) {
+        if (doneRecipes[0].id === id) {
+          setShowStartBtn(false);
+        }
+      } else {
+        setShowStartBtn(true);
+      }
+    };
+
+    handleDoneRecipes();
     requestRecipe();
-  }, [params]);
+  }, [params, id]);
 
   // provides state with all the info
   useEffect(() => {
@@ -133,9 +145,15 @@ export default function FoodDetails() {
           )}
         </div>
         <div>
-          <button type="button" data-testid="start-recipe-btn" className="bottom">
-            Start Recipe
-          </button>
+          {showStartBtn && (
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              className="bottom"
+            >
+              Start Recipe
+            </button>
+          )}
         </div>
       </div>
     </main>

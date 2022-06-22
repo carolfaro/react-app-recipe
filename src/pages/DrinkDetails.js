@@ -4,16 +4,16 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 export default function DrinkDetails() {
-  const MAX_DRINKS_ITEMS = 6;
+  const MAX_FOOD_ITEMS = 6;
   const params = useParams();
+  const id = Object.values(params)[0];
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
   const [measureList, setMeasureList] = useState([]);
   const [foodList, setFoodList] = useState([]);
+  const [showStartBtn, setShowStartBtn] = useState(true);
 
   useEffect(() => {
-    const id = Object.values(params)[0];
-
     const requestRecipe = async () => {
       const API_URL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
       const result = await fetch(API_URL);
@@ -22,8 +22,20 @@ export default function DrinkDetails() {
       setRecipe(data.drinks[0]);
     };
 
+    const handleDoneRecipes = () => {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
+      if (doneRecipes.length > 0) {
+        if (doneRecipes[0].id === id) {
+          setShowStartBtn(false);
+        }
+      } else {
+        setShowStartBtn(true);
+      }
+    };
+
+    handleDoneRecipes();
     requestRecipe();
-  }, [params]);
+  }, [params, id]);
 
   useEffect(() => {
     const ingredients = Object.entries(recipe);
@@ -101,7 +113,7 @@ export default function DrinkDetails() {
           <h2>Recommended</h2>
           {foodList.length !== 0 && (
             <div className="recommendation-wrapper">
-              {foodList.meals.slice(0, MAX_DRINKS_ITEMS).map((meal, index) => (
+              {foodList.meals.slice(0, MAX_FOOD_ITEMS).map((meal, index) => (
                 <div
                   key={ index }
                   className="recommendation"
@@ -122,9 +134,15 @@ export default function DrinkDetails() {
           )}
         </div>
         <div>
-          <button type="button" data-testid="start-recipe-btn" className="bottom">
-            Start Recipe
-          </button>
+          {showStartBtn && (
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              className="bottom"
+            >
+              Start Recipe
+            </button>
+          )}
         </div>
       </div>
     </main>
