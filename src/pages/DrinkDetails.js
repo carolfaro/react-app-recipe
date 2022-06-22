@@ -8,6 +8,7 @@ export default function DrinkDetails() {
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
   const [measureList, setMeasureList] = useState([]);
+  const [foodList, setFoodList] = useState([]);
 
   useEffect(() => {
     const id = Object.values(params)[0];
@@ -44,6 +45,18 @@ export default function DrinkDetails() {
     setMeasureList(newMeasureList);
     setIngredientList(newIngredientsList);
   }, [recipe]);
+
+  useEffect(() => {
+    const foodRequest = async () => {
+      const API_URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+      const result = await fetch(API_URL);
+      const data = await result.json();
+
+      setFoodList(data);
+    };
+
+    foodRequest();
+  }, []);
 
   return (
     <main>

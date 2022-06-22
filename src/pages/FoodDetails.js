@@ -8,7 +8,9 @@ export default function FoodDetails() {
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
   const [measureList, setMeasureList] = useState([]);
+  const [drinkList, setDrinkList] = useState([]);
 
+  // recipe request
   useEffect(() => {
     const id = Object.values(params)[0];
 
@@ -23,6 +25,7 @@ export default function FoodDetails() {
     requestRecipe();
   }, [params]);
 
+  // provides state with all the info
   useEffect(() => {
     const ingredients = Object.entries(recipe);
     const newIngredientsList = [];
@@ -44,6 +47,19 @@ export default function FoodDetails() {
     setMeasureList(newMeasureList);
     setIngredientList(newIngredientsList);
   }, [recipe]);
+
+  // drink (recomendation) request
+  useEffect(() => {
+    const drinkRequest = async () => {
+      const API_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      const result = await fetch(API_URL);
+      const data = await result.json();
+
+      setDrinkList(data);
+    };
+
+    drinkRequest();
+  }, []);
 
   return (
     <main>
