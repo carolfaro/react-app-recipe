@@ -1,33 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import GlobalContext from '../contex/GlobalContext';
 
 function SearchBar() {
-  const [objSearch, setObjtSearch] = useState([]);
-  const [locationFood, setLocationFood] = useState('');
-
   const {
     setRadioValue,
     buttonSearchBar,
     buttonSearchBarDrinks,
-    inputSearchBar,
-    radioValue,
+    returnAPI,
   } = useContext(GlobalContext);
 
   const location = useLocation();
-
-  useEffect(() => {
-    const verifyLocation = () => {
-      if (location.pathname === '/foods') {
-        setLocationFood('/foods');
-      }
-      if (location.pathname === '/drinks') {
-        setLocationFood('/drinks');
-      }
-    };
-    verifyLocation();
-    return setLocationFood;
-  }, []);
 
   const getApi = () => {
     if (location.pathname === '/foods') {
@@ -36,19 +19,8 @@ function SearchBar() {
     if (location.pathname === '/drinks') {
       buttonSearchBarDrinks();
     }
+    return returnAPI;
   };
-
-  const verifyApi = () => {
-    const grupo = {
-      inputSearchBar,
-      radioValue,
-      locationFood,
-    };
-    setObjtSearch(grupo);
-    getApi();
-  };
-
-  console.log(objSearch);
 
   return (
     <main>
@@ -89,7 +61,7 @@ function SearchBar() {
         <button
           type="button"
           data-testid="exec-search-btn"
-          onClick={ () => verifyApi() }
+          onClick={ () => getApi() }
         >
           Search
         </button>

@@ -13,42 +13,36 @@ function GlobalProvider({ children }) {
     const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`;
     const data = await fetch(url).then((response) => response.json());
     setReturnAPI(data);
-    return returnAPI;
   };
 
   const searchMealName = async (names) => {
     const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${names}`;
     const data = await fetch(url).then((response) => response.json());
     setReturnAPI(data);
-    return returnAPI;
   };
 
   const ingredientsMeal = async (ingredients) => {
     const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredients}`;
     const data = await fetch(url).then((response) => response.json());
     setReturnAPI(data);
-    return returnAPI;
   };
 
   const ingredientsDrinks = async (ingrediente) => {
     const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingrediente}`;
     const data = await fetch(url).then((response) => response.json());
     setReturnAPI(data);
-    return returnAPI;
   };
 
   const searchDrinksName = async (nome) => {
     const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${nome}`;
     const data = await fetch(url).then((response) => response.json());
     setReturnAPI(data);
-    return returnAPI;
   };
 
   const firstNameLetterDrinks = async (letter) => {
     const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${letter}`;
     const data = await fetch(url).then((response) => response.json());
     setReturnAPI(data);
-    return returnAPI;
   };
 
   const buttonSearchBar = () => {
@@ -70,7 +64,7 @@ function GlobalProvider({ children }) {
       searchDrinksName(inputSearchBar);
     } else if (radioValue === 'letterV' && inputSearchBar.length === 1) {
       firstNameLetterDrinks(inputSearchBar);
-    } else {
+    } else if ((radioValue === 'letterV' && inputSearchBar.length < 1)) {
       global.alert('Your search must have only 1 (one) character');
     }
   };
