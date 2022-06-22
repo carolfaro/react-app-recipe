@@ -4,6 +4,7 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 export default function DrinkDetails() {
+  const MAX_DRINKS_ITEMS = 6;
   const params = useParams();
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
@@ -17,7 +18,7 @@ export default function DrinkDetails() {
       const API_URL = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
       const result = await fetch(API_URL);
       const data = await result.json();
-      console.log(data.drinks[0]);
+
       setRecipe(data.drinks[0]);
     };
 
@@ -96,16 +97,29 @@ export default function DrinkDetails() {
             {recipe.strInstructions}
           </span>
         </div>
-        <div>
+        <div className="recommendation-container">
           <h2>Recommended</h2>
-          {ingredientList.map((ingredient, index) => (
-            <span
-              key={ index }
-              data-testid={ `${index}-recomendation-card` }
-            >
-              {ingredient}
-            </span>
-          ))}
+          {foodList.length !== 0 && (
+            <div className="recommendation-wrapper">
+              {foodList.meals.slice(0, MAX_DRINKS_ITEMS).map((meal, index) => (
+                <div
+                  key={ index }
+                  className="recommendation"
+                  data-testid={ `${index}-recomendation-card` }
+                >
+                  <img
+                    src={ meal.strMealThumb }
+                    alt="drink"
+                    className="recommendation-img"
+                  />
+                  <span>{ meal.strCategory }</span>
+                  <span data-testid={ `${index}-recomendation-title` }>
+                    { meal.strMeal }
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <div>
           <button type="button" data-testid="start-recipe-btn">

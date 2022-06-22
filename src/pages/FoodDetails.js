@@ -4,6 +4,7 @@ import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 export default function FoodDetails() {
+  const MAX_DRINKS_ITEMS = 6;
   const params = useParams();
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
@@ -107,16 +108,29 @@ export default function FoodDetails() {
             title="video"
           />
         </div>
-        <div>
+        <div className="recommendation-container">
           <h2>Recommended</h2>
-          {ingredientList.map((ingredient, index) => (
-            <span
-              key={ index }
-              data-testid={ `${index}-recomendation-card` }
-            >
-              {ingredient}
-            </span>
-          ))}
+          {drinkList.length !== 0 && (
+            <div className="recommendation-wrapper">
+              {drinkList.drinks.slice(0, MAX_DRINKS_ITEMS).map((drink, index) => (
+                <div
+                  key={ index }
+                  className="recommendation"
+                  data-testid={ `${index}-recomendation-card` }
+                >
+                  <img
+                    src={ drink.strDrinkThumb }
+                    alt="drink"
+                    className="recommendation-img"
+                  />
+                  <span>{ drink.strAlcoholic }</span>
+                  <span data-testid={ `${index}-recomendation-title` }>
+                    { drink.strDrink }
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <div>
           <button type="button" data-testid="start-recipe-btn">
