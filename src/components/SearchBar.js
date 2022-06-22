@@ -1,11 +1,24 @@
 import React, { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import GlobalContext from '../contex/GlobalContext';
 
 function SearchBar() {
   const {
     setRadioValue,
     buttonSearchBar,
+    buttonSearchBarDrinks,
   } = useContext(GlobalContext);
+
+  const location = useLocation();
+
+  const verifyApi = () => {
+    if (location.pathname === '/foods') {
+      buttonSearchBar();
+    }
+    if (location.pathname === '/drinks') {
+      buttonSearchBarDrinks();
+    }
+  };
 
   return (
     <main>
@@ -46,7 +59,7 @@ function SearchBar() {
         <button
           type="button"
           data-testid="exec-search-btn"
-          onClick={ () => buttonSearchBar() }
+          onClick={ () => verifyApi() }
         >
           Search
         </button>

@@ -27,6 +27,24 @@ function GlobalProvider({ children }) {
     setReturnAPI(data);
   };
 
+  const ingredientsDrinks = async (ingrediente) => {
+    const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingrediente}`;
+    const data = await fetch(url).then((response) => response.json());
+    setReturnAPI(data);
+  };
+
+  const searchDrinksName = async (nome) => {
+    const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${nome}`;
+    const data = await fetch(url).then((response) => response.json());
+    setReturnAPI(data);
+  };
+
+  const firstNameLetterDrinks = async (letter) => {
+    const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${letter}`;
+    const data = await fetch(url).then((response) => response.json());
+    setReturnAPI(data);
+  };
+
   const buttonSearchBar = () => {
     if (radioValue === 'ingredientV') {
       ingredientsMeal(inputSearchBar);
@@ -36,6 +54,20 @@ function GlobalProvider({ children }) {
       console.log('Name');
     } else if (radioValue === 'letterV' && inputSearchBar.length === 1) {
       firstNameLetterMeal(inputSearchBar);
+    } else {
+      global.alert('Your search must have only 1 (one) character');
+    }
+  };
+
+  const buttonSearchBarDrinks = () => {
+    if (radioValue === 'ingredientV') {
+      ingredientsDrinks(inputSearchBar);
+      console.log('Ingrediente');
+    } else if (radioValue === 'nameV') {
+      searchDrinksName(inputSearchBar);
+      console.log('Name');
+    } else if (radioValue === 'letterV' && inputSearchBar.length === 1) {
+      firstNameLetterDrinks(inputSearchBar);
     } else {
       global.alert('Your search must have only 1 (one) character');
     }
@@ -52,6 +84,7 @@ function GlobalProvider({ children }) {
     setRadioValue,
     buttonSearchBar,
     returnAPI,
+    buttonSearchBarDrinks,
   };
 
   return (
