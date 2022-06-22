@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 export default function DrinkDetails() {
   const MAX_FOOD_ITEMS = 6;
   const params = useParams();
+  const history = useHistory();
   const id = Object.values(params)[0];
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
@@ -23,6 +24,7 @@ export default function DrinkDetails() {
     };
 
     localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
+    history.push(`/drinks/${id}/in-progress`);
   };
 
   useEffect(() => {
