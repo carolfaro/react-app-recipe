@@ -3,48 +3,33 @@ import { useLocation } from 'react-router-dom';
 import GlobalContext from '../contex/GlobalContext';
 
 function SearchBar() {
-  const [idFoodOrDrink, setIdFoodOrDrink] = useState('');
-  // const [idCarol, setIdCarol] = useState('');
-  // const [click, setClick] = useState(false);
+  const [objSearch, setObjtSearch] = useState([]);
+  const [locationFood, setLocationFood] = useState('');
 
   const {
     setRadioValue,
     buttonSearchBar,
     buttonSearchBarDrinks,
-    returnAPI,
+    inputSearchBar,
+    radioValue,
   } = useContext(GlobalContext);
 
   const location = useLocation();
 
-  // const { history } = useHistory();
-
-  // const id = Object.keys(returnAPI)[0];
-
   useEffect(() => {
-    if (buttonSearchBar) {
-      setIdFoodOrDrink(returnAPI.meals);
-    }
-    if (buttonSearchBarDrinks) {
-      setIdFoodOrDrink(returnAPI.meals);
-    }
-  }, [buttonSearchBar, buttonSearchBarDrinks]);
+    const verifyLocation = () => {
+      if (location.pathname === '/foods') {
+        setLocationFood('/foods');
+      }
+      if (location.pathname === '/drinks') {
+        setLocationFood('/drinks');
+      }
+    };
+    verifyLocation();
+    return setLocationFood;
+  }, []);
 
-  useEffect(() => {
-    if (idFoodOrDrink) {
-      console.log(idFoodOrDrink[0]);
-    }
-  }, [idFoodOrDrink]);
-
-  // useEffect(() => {
-  //   if (click) {
-  //     setClick(false);
-  //     setIdPage(returnAPI.meals[0]);
-  //     setIdCarol(Object.values(idPage)[0]);
-  //     console.log(idCarol);
-  //   }
-  // }, [click]);
-
-  const verifyApi = () => {
+  const getApi = () => {
     if (location.pathname === '/foods') {
       buttonSearchBar();
     }
@@ -53,10 +38,17 @@ function SearchBar() {
     }
   };
 
-  // const handleClick = (id) => {
-  //   setLocalStorageLogin();
-  //   history.push(`/foods/${id}`);
-  // };
+  const verifyApi = () => {
+    const grupo = {
+      inputSearchBar,
+      radioValue,
+      locationFood,
+    };
+    setObjtSearch(grupo);
+    getApi();
+  };
+
+  console.log(objSearch);
 
   return (
     <main>
@@ -110,4 +102,35 @@ export default SearchBar;
 
 // RASCUNHO
 // redirecione para a página de detalhes
-// s
+// const { history } = useHistory();
+
+// const id = Object.keys(returnAPI)[0];
+
+// useEffect(() => {
+//   if (buttonSearchBar) {
+//     setIdFoodOrDrink(returnAPI);
+//   }
+//   if (buttonSearchBarDrinks) {
+//     setIdFoodOrDrink(returnAPI);
+//   }
+// }, [buttonSearchBar, buttonSearchBarDrinks]);
+
+// useEffect(() => {
+//   if (idFoodOrDrink) {
+//     setSingleElement(idFoodOrDrink);
+//     console.log(singleElement[0]);
+//   }
+// }, [idFoodOrDrink]);
+
+// useEffect(() => {
+//   if (click) {
+//     setClick(false);
+//     setIdPage(returnAPI.meals[0]);
+//     setIdCarol(Object.values(idPage)[0]);
+//     console.log(idCarol);
+//   }
+// }, [click]);
+// const handleClick = (id) => {
+//   setLocalStorageLogin();
+//   history.push(`/foods/${id}`);
+// };

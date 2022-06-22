@@ -13,45 +13,49 @@ function GlobalProvider({ children }) {
     const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`;
     const data = await fetch(url).then((response) => response.json());
     setReturnAPI(data);
+    return returnAPI;
   };
 
   const searchMealName = async (names) => {
     const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${names}`;
     const data = await fetch(url).then((response) => response.json());
     setReturnAPI(data);
+    return returnAPI;
   };
 
   const ingredientsMeal = async (ingredients) => {
     const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredients}`;
     const data = await fetch(url).then((response) => response.json());
     setReturnAPI(data);
+    return returnAPI;
   };
 
   const ingredientsDrinks = async (ingrediente) => {
     const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingrediente}`;
     const data = await fetch(url).then((response) => response.json());
     setReturnAPI(data);
+    return returnAPI;
   };
 
   const searchDrinksName = async (nome) => {
     const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${nome}`;
     const data = await fetch(url).then((response) => response.json());
     setReturnAPI(data);
+    return returnAPI;
   };
 
   const firstNameLetterDrinks = async (letter) => {
     const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${letter}`;
     const data = await fetch(url).then((response) => response.json());
     setReturnAPI(data);
+    return returnAPI;
   };
 
   const buttonSearchBar = () => {
     if (radioValue === 'ingredientV') {
       ingredientsMeal(inputSearchBar);
-      console.log(returnAPI);
     } else if (radioValue === 'nameV') {
       searchMealName(inputSearchBar);
-      console.log('Name');
     } else if (radioValue === 'letterV' && inputSearchBar.length === 1) {
       firstNameLetterMeal(inputSearchBar);
     } else {
@@ -62,10 +66,8 @@ function GlobalProvider({ children }) {
   const buttonSearchBarDrinks = () => {
     if (radioValue === 'ingredientV') {
       ingredientsDrinks(inputSearchBar);
-      console.log('Ingrediente');
     } else if (radioValue === 'nameV') {
       searchDrinksName(inputSearchBar);
-      console.log(returnAPI);
     } else if (radioValue === 'letterV' && inputSearchBar.length === 1) {
       firstNameLetterDrinks(inputSearchBar);
     } else {
