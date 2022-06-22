@@ -1,17 +1,55 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 export default function DrinkDetails() {
   const MAX_FOOD_ITEMS = 6;
   const params = useParams();
+  const history = useHistory();
   const id = Object.values(params)[0];
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
   const [measureList, setMeasureList] = useState([]);
   const [foodList, setFoodList] = useState([]);
   const [showStartBtn, setShowStartBtn] = useState(true);
+  const [showContinueBtn, setShowContinueBtn] = useState(false);
+  const [inProgressObject, setInProgressObject] = useState({});
+  const [linkCopied, setLinkCopied] = useState(false);
+
+  const addRecipeToInProgressList = () => {
+    const inProgressRecipeList = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const newObj = {
+      cocktails: { ...inProgressRecipeList.cocktails, [id]: [] },
+      meals: { ...inProgressRecipeList.meals },
+    };
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
+    history.push(`/drinks/${id}/in-progress`);
+  };
+
+  useEffect(() => {
+    const inProgressRecipesList = JSON
+      .parse(localStorage.getItem('inProgressRecipes') || '{}');
+    if (inProgressRecipesList.cocktails === undefined) {
+      localStorage.setItem('inProgressRecipes', JSON
+        .stringify({ cocktails: {}, meals: {} }));
+    } else {
+      setInProgressObject(inProgressRecipesList);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    const { cocktails } = inProgressObject;
+
+    if (cocktails !== undefined) {
+      if (cocktails[id] !== undefined) {
+        setShowContinueBtn(true);
+      }
+    } else {
+      setShowContinueBtn(false);
+    }
+  }, [inProgressObject, id]);
 
   useEffect(() => {
     const requestRecipe = async () => {
@@ -71,6 +109,11 @@ export default function DrinkDetails() {
     foodRequest();
   }, []);
 
+  const handleLinkCopy = () => {
+    navigator.clipboard.writeText(`http://localhost:3000/drinks/${id}`);
+    setLinkCopied(!linkCopied);
+  };
+
   return (
     <main>
       <img src={ recipe.strDrinkThumb } data-testid="recipe-photo" alt="#" />
@@ -79,7 +122,9 @@ export default function DrinkDetails() {
         <button
           type="button"
           data-testid="share-btn"
+          onClick={ handleLinkCopy }
         >
+          {linkCopied && <span>Link copied!</span>}
           <img src={ shareIcon } alt="#" />
         </button>
         <button
@@ -134,13 +179,23 @@ export default function DrinkDetails() {
           )}
         </div>
         <div>
-          {showStartBtn && (
+          {(showStartBtn && !showContinueBtn) && (
+            <button
+              type="button"
+              onClick={ addRecipeToInProgressList }
+              data-testid="start-recipe-btn"
+              className="bottom"
+            >
+              Start Recipe
+            </button>
+          )}
+          {showContinueBtn && (
             <button
               type="button"
               data-testid="start-recipe-btn"
               className="bottom"
             >
-              Start Recipe
+              Continue Recipe
             </button>
           )}
         </div>
