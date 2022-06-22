@@ -122,7 +122,7 @@ export default function DrinkDetails() {
           )}
         </div>
         <div>
-          <button type="button" data-testid="start-recipe-btn">
+          <button type="button" data-testid="start-recipe-btn" className="bottom">
             Start Recipe
           </button>
         </div>

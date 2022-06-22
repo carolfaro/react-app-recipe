@@ -42,3 +42,8 @@
 .recommendation-img {
   max-width: 180px;
 }
+
+.bottom {
+  position: fixed;
+  bottom: 0px;
+}
