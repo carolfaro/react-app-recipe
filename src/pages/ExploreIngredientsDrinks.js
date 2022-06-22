@@ -17,8 +17,6 @@ function ExploreIngsDrinks() {
     ingredientsDrinks();
   }, []);
 
-
-
   return (
     <div>
       <Header title="Explore Ingredients Drinks" showBt={ false } />
