@@ -1,7 +1,5 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
-
 import Login from './pages/Login';
 import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
@@ -17,12 +15,13 @@ import Profile from './pages/Profile';
 import './App.css';
 import FoodDetails from './pages/FoodDetails';
 import DrinkDetails from './pages/DrinkDetails';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import NotFound from './pages/NotFound';
+import GlobalProvider from './contex/GlobalProvider';
 
 function App() {
   return (
     <div className="app">
-      <BrowserRouter>
+      <GlobalProvider>
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route exact path="/foods" component={ Foods } />
@@ -46,8 +45,9 @@ function App() {
           <Route exact path="/done-recipes" component={ DoneRecipes } />
           <Route exact path="/favorite-recipes" component={ Favorites } />
           <Route exact path="/profile" component={ Profile } />
+          <Route path="*" component={ NotFound } />
         </Switch>
-      </BrowserRouter>
+      </GlobalProvider>
     </div>
   );
 }

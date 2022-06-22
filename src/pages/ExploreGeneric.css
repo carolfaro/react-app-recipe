@@ -6,9 +6,23 @@
 }
 
 .explore-ing-container {
+  align-items: center;
   background-color: darkgrey;
   border: solid black 1px;
   border-radius: 20px;
-  max-width: 100px;
-  opacity: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 150px;
+  width: 100px;
+}
+
+.nations-drop-down{
+  max-height: 50px;
+  overflow-y: auto;
+}
+
+.img-small {
+  max-height: 80px;
+  max-width: 80px;
 }

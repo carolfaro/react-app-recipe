@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import GlobalContext from './GlobalContext';
 
 function GlobalProvider({ children }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [inputSearchBar, setInputSearchBar] = useState('');
   const [radioValue, setRadioValue] = useState('');
   const [returnAPI, setReturnAPI] = useState({});
@@ -42,10 +40,6 @@ function GlobalProvider({ children }) {
   };
 
   const contextValue = {
-    email,
-    setEmail,
-    password,
-    setPassword,
     inputSearchBar,
     setInputSearchBar,
     radioValue,
