@@ -15,6 +15,7 @@ export default function FoodDetails() {
   const [showStartBtn, setShowStartBtn] = useState(true);
   const [showContinueBtn, setShowContinueBtn] = useState(false);
   const [inProgressObject, setInProgressObject] = useState({});
+  const [linkCopied, setLinkCopied] = useState(false);
 
   const addRecipeToInProgressList = () => {
     const inProgressRecipeList = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -108,6 +109,11 @@ export default function FoodDetails() {
     drinkRequest();
   }, []);
 
+  const handleLinkCopy = () => {
+    navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
+    setLinkCopied(!linkCopied);
+  };
+
   return (
     <main>
       <img src={ recipe.strMealThumb } data-testid="recipe-photo" alt="#" />
@@ -116,7 +122,9 @@ export default function FoodDetails() {
         <button
           type="button"
           data-testid="share-btn"
+          onClick={ handleLinkCopy }
         >
+          {linkCopied && <span>Link copied!</span>}
           <img src={ shareIcon } alt="#" />
         </button>
         <button
