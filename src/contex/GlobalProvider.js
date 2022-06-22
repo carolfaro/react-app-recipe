@@ -48,7 +48,7 @@ function GlobalProvider({ children }) {
   const buttonSearchBar = () => {
     if (radioValue === 'ingredientV') {
       ingredientsMeal(inputSearchBar);
-      console.log('Ingrediente');
+      console.log(returnAPI);
     } else if (radioValue === 'nameV') {
       searchMealName(inputSearchBar);
       console.log('Name');
@@ -65,7 +65,7 @@ function GlobalProvider({ children }) {
       console.log('Ingrediente');
     } else if (radioValue === 'nameV') {
       searchDrinksName(inputSearchBar);
-      console.log('Name');
+      console.log(returnAPI);
     } else if (radioValue === 'letterV' && inputSearchBar.length === 1) {
       firstNameLetterDrinks(inputSearchBar);
     } else {
