@@ -12,6 +12,41 @@ export default function DrinkDetails() {
   const [measureList, setMeasureList] = useState([]);
   const [foodList, setFoodList] = useState([]);
   const [showStartBtn, setShowStartBtn] = useState(true);
+  const [showContinueBtn, setShowContinueBtn] = useState(false);
+  const [inProgressObject, setInProgressObject] = useState({});
+
+  const addRecipeToInProgressList = () => {
+    const inProgressRecipeList = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const newObj = {
+      cocktails: { ...inProgressRecipeList.cocktails, [id]: [] },
+      meals: { ...inProgressRecipeList.meals },
+    };
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
+  };
+
+  useEffect(() => {
+    const inProgressRecipesList = JSON
+      .parse(localStorage.getItem('inProgressRecipes') || '{}');
+    if (inProgressRecipesList.cocktails === undefined) {
+      localStorage.setItem('inProgressRecipes', JSON
+        .stringify({ cocktails: {}, meals: {} }));
+    } else {
+      setInProgressObject(inProgressRecipesList);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    const { cocktails } = inProgressObject;
+
+    if (cocktails !== undefined) {
+      if (cocktails[id] !== undefined) {
+        setShowContinueBtn(true);
+      }
+    } else {
+      setShowContinueBtn(false);
+    }
+  }, [inProgressObject, id]);
 
   useEffect(() => {
     const requestRecipe = async () => {
@@ -134,13 +169,23 @@ export default function DrinkDetails() {
           )}
         </div>
         <div>
-          {showStartBtn && (
+          {(showStartBtn && !showContinueBtn) && (
+            <button
+              type="button"
+              onClick={ addRecipeToInProgressList }
+              data-testid="start-recipe-btn"
+              className="bottom"
+            >
+              Start Recipe
+            </button>
+          )}
+          {showContinueBtn && (
             <button
               type="button"
               data-testid="start-recipe-btn"
               className="bottom"
             >
-              Start Recipe
+              Continue Recipe
             </button>
           )}
         </div>

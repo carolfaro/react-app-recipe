@@ -12,8 +12,42 @@ export default function FoodDetails() {
   const [measureList, setMeasureList] = useState([]);
   const [drinkList, setDrinkList] = useState([]);
   const [showStartBtn, setShowStartBtn] = useState(true);
+  const [showContinueBtn, setShowContinueBtn] = useState(false);
+  const [inProgressObject, setInProgressObject] = useState({});
 
-  // recipe request
+  const addRecipeToInProgressList = () => {
+    const inProgressRecipeList = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const newObj = {
+      cocktails: { ...inProgressRecipeList.cocktails },
+      meals: { ...inProgressRecipeList.meals, [id]: [] },
+    };
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify(newObj));
+  };
+
+  useEffect(() => {
+    const inProgressRecipesList = JSON
+      .parse(localStorage.getItem('inProgressRecipes') || '{}');
+    if (inProgressRecipesList.meals === undefined) {
+      localStorage.setItem('inProgressRecipes', JSON
+        .stringify({ cocktails: {}, meals: {} }));
+    } else {
+      setInProgressObject(inProgressRecipesList);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    const { meals } = inProgressObject;
+
+    if (meals !== undefined) {
+      if (meals[id] !== undefined) {
+        setShowContinueBtn(true);
+      }
+    } else {
+      setShowContinueBtn(false);
+    }
+  }, [inProgressObject, id]);
+
   useEffect(() => {
     const requestRecipe = async () => {
       const API_URL = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
@@ -38,7 +72,6 @@ export default function FoodDetails() {
     requestRecipe();
   }, [params, id]);
 
-  // provides state with all the info
   useEffect(() => {
     const ingredients = Object.entries(recipe);
     const newIngredientsList = [];
@@ -61,7 +94,6 @@ export default function FoodDetails() {
     setIngredientList(newIngredientsList);
   }, [recipe]);
 
-  // drink (recomendation) request
   useEffect(() => {
     const drinkRequest = async () => {
       const API_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -145,13 +177,23 @@ export default function FoodDetails() {
           )}
         </div>
         <div>
-          {showStartBtn && (
+          {(showStartBtn && !showContinueBtn) && (
+            <button
+              type="button"
+              onClick={ addRecipeToInProgressList }
+              data-testid="start-recipe-btn"
+              className="bottom"
+            >
+              Start Recipe
+            </button>
+          )}
+          {showContinueBtn && (
             <button
               type="button"
               data-testid="start-recipe-btn"
               className="bottom"
             >
-              Start Recipe
+              Continue Recipe
             </button>
           )}
         </div>
