@@ -9,13 +9,13 @@ function Footer() {
   return (
     <footer data-testid="footer" className="footer">
       <Link to="/drinks">
-        <img src={ drinkSvg } alt="React Logo" data-testid="drinks-bottom-btn" />
+        <img src={ drinkSvg } alt="drink-icon" data-testid="drinks-bottom-btn" />
       </Link>
       <Link to="/explore">
-        <img src={ exploreSvg } alt="React Logo" data-testid="explore-bottom-btn" />
+        <img src={ exploreSvg } alt="explore-icon" data-testid="explore-bottom-btn" />
       </Link>
       <Link to="/foods">
-        <img src={ mealSvg } alt="React Logo" data-testid="food-bottom-btn" />
+        <img src={ mealSvg } alt="fork-spon-icon" data-testid="food-bottom-btn" />
       </Link>
     </footer>
   );
