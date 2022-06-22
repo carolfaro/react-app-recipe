@@ -22,3 +22,28 @@
   margin-top: 50px;
   width: 300px;
 }
+
+.recommendation-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.recommendation-wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  overflow-x: auto;
+}
+
+.recommendation {
+  display: flex;
+  flex-flow: column;
+}
+
+.recommendation-img {
+  max-width: 180px;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 0px;
+}
