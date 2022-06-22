@@ -9,6 +9,8 @@ const BY_NATIONALITY = 'By Nationality';
 const SURPRISE_ME = 'Surprise me!';
 const EXPLORE_FOODS = 'Explore Foods';
 const EXPLORE_DRINKS = 'Explore Drinks';
+const EXPLORE_FOODS_URL = '/explore/foods';
+const EXPLORE_DRINKS_URL = '/explore/drinks';
 
 describe('5.0 - Testa a pagina de Explore, Exlore Foods e Explores Drinks)', () => {
   it('5.1 - Testa se renderiza corretamente a pagina Explore', () => {
@@ -32,7 +34,7 @@ describe('5.0 - Testa a pagina de Explore, Exlore Foods e Explores Drinks)', () 
 
     userEvent.click(btnByFood);
 
-    expect(history.location.pathname).toBe('/explore/foods');
+    expect(history.location.pathname).toBe(EXPLORE_FOODS_URL);
 
     history.push('/explore');
 
@@ -40,13 +42,13 @@ describe('5.0 - Testa a pagina de Explore, Exlore Foods e Explores Drinks)', () 
 
     userEvent.click(btnByDrink);
 
-    expect(history.location.pathname).toBe('/explore/drinks');
+    expect(history.location.pathname).toBe(EXPLORE_DRINKS_URL);
   });
 
   it('5.3 - Testa se renderiza corretamente a página de Explore Foods', () => {
     const { history } = renderWithRouter(<App />);
 
-    history.push('/explore/foods');
+    history.push(EXPLORE_FOODS_URL);
 
     const btnByIng = screen.getByText(BY_INGREDIENT);
     const btnByNat = screen.getByText(BY_NATIONALITY);
@@ -60,7 +62,7 @@ describe('5.0 - Testa a pagina de Explore, Exlore Foods e Explores Drinks)', () 
   it('5.4 - Testa se renderiza corretamente a página de Explore Drinks', () => {
     const { history } = renderWithRouter(<App />);
 
-    history.push('/explore/drinks');
+    history.push(EXPLORE_DRINKS_URL);
 
     const btnByIng = screen.getByText(BY_INGREDIENT);
     const btnSurprise = screen.getByText(SURPRISE_ME);
@@ -72,7 +74,7 @@ describe('5.0 - Testa a pagina de Explore, Exlore Foods e Explores Drinks)', () 
   it('5.5 - Testa a funcionalidade dos botões da página Explore Foods', () => {
     const { history } = renderWithRouter(<App />);
 
-    history.push('/explore/foods');
+    history.push(EXPLORE_FOODS_URL);
 
     const btnByIng = screen.getByText(BY_INGREDIENT);
 
@@ -80,7 +82,7 @@ describe('5.0 - Testa a pagina de Explore, Exlore Foods e Explores Drinks)', () 
 
     expect(history.location.pathname).toBe('/explore/foods/ingredients');
 
-    history.push('/explore/foods');
+    history.push(EXPLORE_FOODS_URL);
 
     const btnByNat = screen.getByText(BY_NATIONALITY);
 
@@ -88,7 +90,7 @@ describe('5.0 - Testa a pagina de Explore, Exlore Foods e Explores Drinks)', () 
 
     expect(history.location.pathname).toBe('/explore/foods/nationalities');
 
-    history.push('/explore/foods');
+    history.push(EXPLORE_FOODS_URL);
 
     const btnSurprise = screen.getByText(SURPRISE_ME);
 
@@ -100,7 +102,7 @@ describe('5.0 - Testa a pagina de Explore, Exlore Foods e Explores Drinks)', () 
   it('5.6 - Testa a funcionalidade dos botões da página Explore Drinks', () => {
     const { history } = renderWithRouter(<App />);
 
-    history.push('/explore/drinks');
+    history.push(EXPLORE_DRINKS_URL);
 
     const btnByIng = screen.getByText(BY_INGREDIENT);
 
@@ -108,7 +110,7 @@ describe('5.0 - Testa a pagina de Explore, Exlore Foods e Explores Drinks)', () 
 
     expect(history.location.pathname).toBe('/explore/drinks/ingredients');
 
-    history.push('/explore/drinks');
+    history.push(EXPLORE_DRINKS_URL);
 
     const btnSurprise = screen.getByText(SURPRISE_ME);
 
