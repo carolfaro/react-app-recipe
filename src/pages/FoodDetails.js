@@ -138,6 +138,7 @@ export default function FoodDetails() {
             type="button"
             data-testid="favorite-btn"
             src={ blackHeartIcon }
+            onClick={ () => setIsRecipeFavorite(!isRecipeFavorite) }
           >
             <img src={ blackHeartIcon } alt="#" />
           </button>
@@ -147,6 +148,7 @@ export default function FoodDetails() {
             type="button"
             data-testid="favorite-btn"
             src={ whiteHeartIcon }
+            onClick={ () => setIsRecipeFavorite(!isRecipeFavorite) }
           >
             <img src={ whiteHeartIcon } alt="#" />
           </button>

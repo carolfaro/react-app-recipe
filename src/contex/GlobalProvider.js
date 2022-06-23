@@ -89,7 +89,6 @@ function GlobalProvider({ children }) {
   };
 
   const verifyFavoriteRecipe = (id) => {
-    console.log(id);
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
     if (favoriteRecipes.length > 0) {
       if (favoriteRecipes[0].id === id) {
