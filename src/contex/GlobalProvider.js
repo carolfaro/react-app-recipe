@@ -11,47 +11,58 @@ function GlobalProvider({ children }) {
 
   const firstNameLetterMeal = async (letter) => {
     const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`;
-    const data = await fetch(url).then((response) => response.json());
-    setReturnAPI(data);
+    const { meals } = await fetch(url).then((response) => response.json());
+    if (meals !== null) {
+      setReturnAPI(meals);
+    }
   };
 
   const searchMealName = async (names) => {
     const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${names}`;
-    const data = await fetch(url).then((response) => response.json());
-    setReturnAPI(data);
+    const { meals } = await fetch(url).then((response) => response.json());
+    if (meals !== null) {
+      setReturnAPI(meals);
+    }
   };
 
   const ingredientsMeal = async (ingredients) => {
     const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredients}`;
-    const data = await fetch(url).then((response) => response.json());
-    setReturnAPI(data);
+    const { meals } = await fetch(url).then((response) => response.json());
+    if (meals !== null) {
+      setReturnAPI(meals);
+    }
   };
 
   const ingredientsDrinks = async (ingrediente) => {
     const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingrediente}`;
-    const data = await fetch(url).then((response) => response.json());
-    setReturnAPI(data);
+    const { drinks } = await fetch(url).then((response) => response.json());
+    if (drinks !== null) {
+      setReturnAPI(drinks);
+    }
   };
 
   const searchDrinksName = async (nome) => {
     const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${nome}`;
-    const data = await fetch(url).then((response) => response.json());
-    setReturnAPI(data);
+    const { drinks } = await fetch(url).then((response) => response.json());
+    if (drinks !== null) {
+      setReturnAPI(drinks);
+    }
   };
 
   const firstNameLetterDrinks = async (letter) => {
     const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${letter}`;
-    const data = await fetch(url).then((response) => response.json());
-    setReturnAPI(data);
+    const { drinks } = await fetch(url).then((response) => response.json());
+    if (drinks === null) {
+      global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      setReturnAPI([]);
+    }
   };
 
   const buttonSearchBar = () => {
     if (radioValue === 'ingredientV') {
       ingredientsMeal(inputSearchBar);
-      console.log('Ingrediente');
     } else if (radioValue === 'nameV') {
       searchMealName(inputSearchBar);
-      console.log('Name');
     } else if (radioValue === 'letterV' && inputSearchBar.length === 1) {
       firstNameLetterMeal(inputSearchBar);
     } else {
@@ -62,10 +73,8 @@ function GlobalProvider({ children }) {
   const buttonSearchBarDrinks = () => {
     if (radioValue === 'ingredientV') {
       ingredientsDrinks(inputSearchBar);
-      console.log('Ingrediente');
     } else if (radioValue === 'nameV') {
       searchDrinksName(inputSearchBar);
-      console.log('Name');
     } else if (radioValue === 'letterV' && inputSearchBar.length === 1) {
       firstNameLetterDrinks(inputSearchBar);
     } else {
