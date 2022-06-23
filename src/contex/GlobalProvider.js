@@ -73,19 +73,36 @@ function GlobalProvider({ children }) {
     }
   };
 
-  const addRecipeToFavoriteList = (recipe) => {
-    const { idMeal, strArea, strCategory, strMeal, strMealThumb } = recipe;
-    const newObj = {
-      idMeal,
-      type: 'food',
-      strArea,
-      strCategory,
-      alcoholicOrNot: '',
-      strMeal,
-      strMealThumb,
-    };
+  const addRecipeToFavoriteList = (recipe, t) => {
+    let newObj = {};
 
-    console.log(newObj);
+    if (t === 'food') {
+      newObj = {
+        id: recipe.idMeal,
+        type: t,
+        nationality: recipe.strArea,
+        category: recipe.strCategory,
+        alcoholicOrNot: '',
+        name: recipe.strMeal,
+        image: recipe.strMealThumb,
+      };
+    }
+
+    if (t === 'drink') {
+      newObj = {
+        id: recipe.idDrink,
+        type: t,
+        nationality: '',
+        category: recipe.strCategory,
+        alcoholicOrNot: recipe.strAlcoholic,
+        name: recipe.strDrink,
+        image: recipe.strDrinkThumb,
+      };
+    }
+
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
+    const newFavoriteRecipesList = [...favoriteRecipes, newObj];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipesList));
   };
 
   const verifyFavoriteRecipe = (id) => {

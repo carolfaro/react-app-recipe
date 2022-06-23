@@ -9,7 +9,7 @@ export default function FoodDetails() {
   const history = useHistory();
   const params = useParams();
   const id = Object.values(params)[0];
-  const { verifyFavoriteRecipe } = useContext(GlobalContext);
+  const { verifyFavoriteRecipe, addRecipeToFavoriteList } = useContext(GlobalContext);
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
   const [measureList, setMeasureList] = useState([]);
@@ -138,7 +138,10 @@ export default function FoodDetails() {
             type="button"
             data-testid="favorite-btn"
             src={ blackHeartIcon }
-            onClick={ () => setIsRecipeFavorite(!isRecipeFavorite) }
+            onClick={ () => {
+              setIsRecipeFavorite(!isRecipeFavorite);
+              addRecipeToFavoriteList(recipe, 'food');
+            } }
           >
             <img src={ blackHeartIcon } alt="#" />
           </button>
@@ -148,7 +151,10 @@ export default function FoodDetails() {
             type="button"
             data-testid="favorite-btn"
             src={ whiteHeartIcon }
-            onClick={ () => setIsRecipeFavorite(!isRecipeFavorite) }
+            onClick={ () => {
+              setIsRecipeFavorite(!isRecipeFavorite);
+              addRecipeToFavoriteList(recipe, 'food');
+            } }
           >
             <img src={ whiteHeartIcon } alt="#" />
           </button>
