@@ -1,0 +1,30 @@
+.done-rec-all {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.done-rec-btns button {
+  height: 30px;
+  margin: 10px;
+  width: 100px;
+}
+
+.done-rec-cards {
+  align-items: center;
+  background-color: darkgray;
+  border: solid black 2px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  padding: 10px;
+}
+
+.done-rec-img {
+  border-radius: 10px;
+  max-height: 100px;
+  max-width: 100px;
+}
