@@ -6,6 +6,10 @@ function SearchBar() {
   // const [test, setTest] = useState([]);
   const [oneDrink, setOneDrink] = useState(false);
   const [oneMeal, setOneMeal] = useState(false);
+  const [allDrinks, setAllDrinks] = useState(false);
+  const [allMeals, setAllMeals] = useState(false);
+  // const [nothing, setNothing] = useState(false);
+  const LIMIT = 12;
 
   const {
     setRadioValue,
@@ -30,8 +34,14 @@ function SearchBar() {
     if (returnAPI !== null && returnAPI.length === 1 && location.pathname === '/foods') {
       setOneMeal(true);
     }
+    if (returnAPI !== null && returnAPI.length > 1 && location.pathname === '/foods') {
+      setAllMeals(true);
+    }
     if (returnAPI !== null && returnAPI.length === 1 && location.pathname === '/drinks') {
       setOneDrink(true);
+    }
+    if (returnAPI !== null && returnAPI.length > 1 && location.pathname === '/drinks') {
+      setAllDrinks(true);
     }
   }, [returnAPI]);
 
@@ -85,6 +95,40 @@ function SearchBar() {
           <Redirect to={ `/foods/${returnAPI[0].idMeal}` } />
         )}
       </form>
+      {allMeals === true && (
+        <div>
+          {returnAPI.slice(0, LIMIT).map(((meal, index) => (
+            <div
+              key={ index.idMeal }
+              data-testid={ `${index}-recipe-card` }
+            >
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ meal.strMealThumb }
+                alt={ meal.strMeal }
+              />
+              <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+            </div>
+          )))}
+        </div>
+      )}
+      {allDrinks === true && (
+        <div>
+          {returnAPI.slice(0, LIMIT).map(((drink, index) => (
+            <div
+              key={ index.idDrink }
+              data-testid={ `${index}-recipe-card` }
+            >
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ drink.strDrinkThumb }
+                alt={ drink.strDrink }
+              />
+              <p data-testid={ `${index}-card-name` }>{drink.strDrink}</p>
+            </div>
+          )))}
+        </div>
+      )}
     </main>
   );
 }
