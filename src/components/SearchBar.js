@@ -1,8 +1,12 @@
-import React, { useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useContext, useState, useEffect } from 'react';
+import { Redirect, useLocation } from 'react-router-dom';
 import GlobalContext from '../contex/GlobalContext';
 
 function SearchBar() {
+  // const [test, setTest] = useState([]);
+  const [oneDrink, setOneDrink] = useState(false);
+  const [oneMeal, setOneMeal] = useState(false);
+
   const {
     setRadioValue,
     buttonSearchBar,
@@ -21,6 +25,15 @@ function SearchBar() {
     }
     return returnAPI;
   };
+
+  useEffect(() => {
+    if (returnAPI !== null && returnAPI.length === 1 && location.pathname === '/foods') {
+      setOneMeal(true);
+    }
+    if (returnAPI !== null && returnAPI.length === 1 && location.pathname === '/drinks') {
+      setOneDrink(true);
+    }
+  }, [returnAPI]);
 
   return (
     <main>
@@ -65,6 +78,12 @@ function SearchBar() {
         >
           Search
         </button>
+        {oneDrink === true && (
+          <Redirect to={ `/drinks/${returnAPI[0].idDrink}` } />
+        )}
+        {oneMeal === true && (
+          <Redirect to={ `/foods/${returnAPI[0].idMeal}` } />
+        )}
       </form>
     </main>
   );
