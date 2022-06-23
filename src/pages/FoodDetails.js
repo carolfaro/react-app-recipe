@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import GlobalContext from '../contex/GlobalContext';
 
 export default function FoodDetails() {
-  const MAX_DRINKS_ITEMS = 6;
   const history = useHistory();
   const params = useParams();
   const id = Object.values(params)[0];
+  const { verifyFavoriteRecipe } = useContext(GlobalContext);
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
   const [measureList, setMeasureList] = useState([]);
@@ -16,6 +18,8 @@ export default function FoodDetails() {
   const [showContinueBtn, setShowContinueBtn] = useState(false);
   const [inProgressObject, setInProgressObject] = useState({});
   const [linkCopied, setLinkCopied] = useState(false);
+  const [isRecipeFavorite, setIsRecipeFavorite] = useState(false);
+  const MAX_DRINKS_ITEMS = 6;
 
   const addRecipeToInProgressList = () => {
     const inProgressRecipeList = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -37,7 +41,9 @@ export default function FoodDetails() {
     } else {
       setInProgressObject(inProgressRecipesList);
     }
-  }, [id]);
+
+    setIsRecipeFavorite((verifyFavoriteRecipe(id)));
+  }, [verifyFavoriteRecipe, id]);
 
   useEffect(() => {
     const { meals } = inProgressObject;
@@ -127,12 +133,24 @@ export default function FoodDetails() {
           {linkCopied && <span>Link copied!</span>}
           <img src={ shareIcon } alt="#" />
         </button>
-        <button
-          type="button"
-          data-testid="favorite-btn"
-        >
-          <img src={ whiteHeartIcon } alt="#" />
-        </button>
+        {isRecipeFavorite && (
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            src={ blackHeartIcon }
+          >
+            <img src={ blackHeartIcon } alt="#" />
+          </button>
+        )}
+        {!isRecipeFavorite && (
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            src={ whiteHeartIcon }
+          >
+            <img src={ whiteHeartIcon } alt="#" />
+          </button>
+        )}
         <br />
         <span data-testid="recipe-category">{`Category: ${recipe.strCategory}`}</span>
       </div>
@@ -158,7 +176,7 @@ export default function FoodDetails() {
           <h2>Video</h2>
           <iframe
             data-testid="video"
-            src={ recipe.strYoutube }
+            src={ `${recipe.strYoutube}&output=embed` }
             title="video"
           />
         </div>
