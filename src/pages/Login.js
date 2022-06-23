@@ -1,16 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import GlobalContext from '../contex/GlobalContext';
 
 function Login() {
   const [checkLogin, setCheckLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const {
-    email,
-    setEmail,
-    password,
-    setPassword,
-  } = useContext(GlobalContext);
   const history = useHistory();
 
   const setLocalStorageLogin = () => {
