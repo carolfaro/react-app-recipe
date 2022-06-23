@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import GlobalContext from '../contex/GlobalContext';
 
 export default function DrinkDetails() {
-  const MAX_FOOD_ITEMS = 6;
   const params = useParams();
   const history = useHistory();
   const id = Object.values(params)[0];
+  const { verifyFavoriteRecipe, addRecipeToFavoriteList } = useContext(GlobalContext);
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
   const [measureList, setMeasureList] = useState([]);
@@ -16,6 +18,8 @@ export default function DrinkDetails() {
   const [showContinueBtn, setShowContinueBtn] = useState(false);
   const [inProgressObject, setInProgressObject] = useState({});
   const [linkCopied, setLinkCopied] = useState(false);
+  const [isRecipeFavorite, setIsRecipeFavorite] = useState(false);
+  const MAX_FOOD_ITEMS = 6;
 
   const addRecipeToInProgressList = () => {
     const inProgressRecipeList = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -37,7 +41,9 @@ export default function DrinkDetails() {
     } else {
       setInProgressObject(inProgressRecipesList);
     }
-  }, [id]);
+
+    setIsRecipeFavorite((verifyFavoriteRecipe(id)));
+  }, [verifyFavoriteRecipe, id]);
 
   useEffect(() => {
     const { cocktails } = inProgressObject;
@@ -127,12 +133,32 @@ export default function DrinkDetails() {
           {linkCopied && <span>Link copied!</span>}
           <img src={ shareIcon } alt="#" />
         </button>
-        <button
-          type="button"
-          data-testid="favorite-btn"
-        >
-          <img src={ whiteHeartIcon } alt="#" />
-        </button>
+        {isRecipeFavorite && (
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            src={ blackHeartIcon }
+            onClick={ () => {
+              setIsRecipeFavorite(!isRecipeFavorite);
+              addRecipeToFavoriteList(recipe, 'drink');
+            } }
+          >
+            <img src={ blackHeartIcon } alt="#" />
+          </button>
+        )}
+        {!isRecipeFavorite && (
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            src={ whiteHeartIcon }
+            onClick={ () => {
+              setIsRecipeFavorite(!isRecipeFavorite);
+              addRecipeToFavoriteList(recipe, 'drink');
+            } }
+          >
+            <img src={ whiteHeartIcon } alt="#" />
+          </button>
+        )}
         <br />
         <span data-testid="recipe-category">{`Category: ${recipe.strAlcoholic}`}</span>
       </div>

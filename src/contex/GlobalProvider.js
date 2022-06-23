@@ -94,6 +94,49 @@ function GlobalProvider({ children }) {
     }
   };
 
+  const addRecipeToFavoriteList = (recipe, t) => {
+    let newObj = {};
+
+    if (t === 'food') {
+      newObj = {
+        id: recipe.idMeal,
+        type: t,
+        nationality: recipe.strArea,
+        category: recipe.strCategory,
+        alcoholicOrNot: '',
+        name: recipe.strMeal,
+        image: recipe.strMealThumb,
+      };
+    }
+
+    if (t === 'drink') {
+      newObj = {
+        id: recipe.idDrink,
+        type: t,
+        nationality: '',
+        category: recipe.strCategory,
+        alcoholicOrNot: recipe.strAlcoholic,
+        name: recipe.strDrink,
+        image: recipe.strDrinkThumb,
+      };
+    }
+
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
+    const newFavoriteRecipesList = [...favoriteRecipes, newObj];
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipesList));
+  };
+
+  const verifyFavoriteRecipe = (id) => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
+    if (favoriteRecipes.length > 0) {
+      if (favoriteRecipes[0].id === id) {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  };
+
   const contextValue = {
     email,
     setEmail,
@@ -106,6 +149,8 @@ function GlobalProvider({ children }) {
     buttonSearchBar,
     returnAPI,
     buttonSearchBarDrinks,
+    addRecipeToFavoriteList,
+    verifyFavoriteRecipe,
   };
 
   return (
