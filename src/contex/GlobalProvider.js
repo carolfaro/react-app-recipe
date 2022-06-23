@@ -8,6 +8,7 @@ function GlobalProvider({ children }) {
   const [inputSearchBar, setInputSearchBar] = useState('');
   const [radioValue, setRadioValue] = useState('');
   const [returnAPI, setReturnAPI] = useState({});
+  const alert = 'Sorry, we haven\'t found any recipes for these filters.';
 
   const firstNameLetterMeal = async (letter) => {
     const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`;
@@ -22,6 +23,9 @@ function GlobalProvider({ children }) {
     const { meals } = await fetch(url).then((response) => response.json());
     if (meals !== null) {
       setReturnAPI(meals);
+    } else {
+      setReturnAPI([]);
+      global.alert(alert);
     }
   };
 
@@ -30,6 +34,9 @@ function GlobalProvider({ children }) {
     const { meals } = await fetch(url).then((response) => response.json());
     if (meals !== null) {
       setReturnAPI(meals);
+    } else {
+      setReturnAPI([]);
+      global.alert(alert);
     }
   };
 
@@ -38,6 +45,9 @@ function GlobalProvider({ children }) {
     const { drinks } = await fetch(url).then((response) => response.json());
     if (drinks !== null) {
       setReturnAPI(drinks);
+    } else {
+      setReturnAPI([]);
+      global.alert(alert);
     }
   };
 
@@ -46,15 +56,17 @@ function GlobalProvider({ children }) {
     const { drinks } = await fetch(url).then((response) => response.json());
     if (drinks !== null) {
       setReturnAPI(drinks);
+    } else {
+      setReturnAPI([]);
+      global.alert(alert);
     }
   };
 
   const firstNameLetterDrinks = async (letter) => {
     const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${letter}`;
     const { drinks } = await fetch(url).then((response) => response.json());
-    if (drinks === null) {
-      global.alert('Sorry, we haven\'t found any recipes for these filters.');
-      setReturnAPI([]);
+    if (drinks !== null) {
+      setReturnAPI(drinks);
     }
   };
 
