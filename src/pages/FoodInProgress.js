@@ -6,7 +6,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 export default function FoodInProgress() {
-  const { verifyFavoriteRecipe } = useContext(GlobalContext);
+  const { verifyFavoriteRecipe, addRecipeToFavoriteList } = useContext(GlobalContext);
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
   const [measureList, setMeasureList] = useState([]);
@@ -99,6 +99,10 @@ export default function FoodInProgress() {
             type="button"
             data-testid="favorite-btn"
             src={ blackHeartIcon }
+            onClick={ () => {
+              setIsFavorite(!isFavorite);
+              addRecipeToFavoriteList(recipe, 'food');
+            } }
           >
             <img src={ blackHeartIcon } alt="#" />
           </button>
@@ -108,6 +112,10 @@ export default function FoodInProgress() {
             type="button"
             data-testid="favorite-btn"
             src={ whiteHeartIcon }
+            onClick={ () => {
+              setIsFavorite(!isFavorite);
+              addRecipeToFavoriteList(recipe, 'food');
+            } }
           >
             <img src={ whiteHeartIcon } alt="#" />
           </button>
