@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import GlobalContext from '../contex/GlobalContext';
+import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 export default function FoodInProgress() {
+  const { verifyFavoriteRecipe } = useContext(GlobalContext);
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
   const [measureList, setMeasureList] = useState([]);
   const [isChecked, setIsChecked] = useState([false,
     false, false, false, false, false, false, false]);
+  const [linkCopied, setLinkCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const params = useParams();
 
   useEffect(() => {
@@ -20,8 +27,9 @@ export default function FoodInProgress() {
       setRecipe(data.drinks[0]);
     };
 
+    setIsFavorite(verifyFavoriteRecipe(id));
     requestRecipe();
-  }, [params]);
+  }, [params, verifyFavoriteRecipe]);
 
   useEffect(() => {
     const ingredients = Object.entries(recipe);
@@ -77,15 +85,33 @@ export default function FoodInProgress() {
         <button
           type="button"
           data-testid="share-btn"
+          onClick={ () => {
+            const { id } = params;
+            navigator.clipboard.writeText(`http://localhost:3000/drinks/${id}`);
+            setLinkCopied(true);
+          } }
         >
-          Botaum
+          {linkCopied && <span>Link copied!</span>}
+          <img src={ shareIcon } alt="#" />
         </button>
-        <button
-          type="button"
-          data-testid="favorite-btn"
-        >
-          Botaum
-        </button>
+        {isFavorite && (
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            src={ blackHeartIcon }
+          >
+            <img src={ blackHeartIcon } alt="#" />
+          </button>
+        )}
+        {!isFavorite && (
+          <button
+            type="button"
+            data-testid="favorite-btn"
+            src={ whiteHeartIcon }
+          >
+            <img src={ whiteHeartIcon } alt="#" />
+          </button>
+        )}
       </div>
       <div>
         <h2 data-testid="recipe-category">
