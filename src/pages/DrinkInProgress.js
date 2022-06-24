@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import GlobalContext from '../contex/GlobalContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -10,11 +10,12 @@ export default function FoodInProgress() {
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
   const [measureList, setMeasureList] = useState([]);
-  const [isChecked, setIsChecked] = useState([false,
-    false, false, false, false, false, false, false]);
+  const [isChecked, setIsChecked] = useState([false, false, false]);
   const [linkCopied, setLinkCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const params = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     const { id } = params;
@@ -61,9 +62,18 @@ export default function FoodInProgress() {
   }, [isChecked]);
 
   useEffect(() => {
+    const THREE = 3;
     const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    setIsChecked(inProgressRecipes);
+    setIsChecked(inProgressRecipes.slice(0, THREE));
   }, []);
+
+  useEffect(() => {
+    if (isChecked.every((checkbox) => checkbox === true)) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [isChecked]);
 
   const handleCheckBox = (index, bool) => {
     setIsChecked((prevList) => {
@@ -150,6 +160,8 @@ export default function FoodInProgress() {
         <button
           type="button"
           data-testid="finish-recipe-btn"
+          disabled={ isDisabled }
+          onClick={ () => history.push('/done-recipes') }
         >
           Finish recipe
         </button>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import GlobalContext from '../contex/GlobalContext';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -14,7 +14,9 @@ export default function FoodInProgress() {
     false, false, false, false, false, false, false]);
   const [linkCopied, setLinkCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const params = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     const { id } = params;
@@ -64,6 +66,14 @@ export default function FoodInProgress() {
     const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
     setIsChecked(inProgressRecipes);
   }, []);
+
+  useEffect(() => {
+    if (isChecked.every((checkbox) => checkbox === true)) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [isChecked]);
 
   const handleCheckBox = (index, bool) => {
     setIsChecked((prevList) => {
@@ -150,6 +160,8 @@ export default function FoodInProgress() {
         <button
           type="button"
           data-testid="finish-recipe-btn"
+          disabled={ isDisabled }
+          onClick={ () => history.push('/done-recipes') }
         >
           Finish recipe
         </button>
