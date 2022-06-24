@@ -5,6 +5,8 @@ export default function FoodInProgress() {
   const [recipe, setRecipe] = useState({});
   const [ingredientList, setIngredientList] = useState([]);
   const [measureList, setMeasureList] = useState([]);
+  const [isChecked, setIsChecked] = useState([false,
+    false, false, false, false, false, false, false]);
   const params = useParams();
 
   useEffect(() => {
@@ -43,6 +45,28 @@ export default function FoodInProgress() {
     setIngredientList(newIngredientsList);
   }, [recipe]);
 
+  useEffect(() => {
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (inProgressRecipes === null) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(isChecked));
+    }
+  }, [isChecked]);
+
+  useEffect(() => {
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    setIsChecked(inProgressRecipes);
+  }, []);
+
+  const handleCheckBox = (index, bool) => {
+    setIsChecked((prevList) => {
+      const newList = [...prevList];
+      newList[index] = bool;
+
+      localStorage.setItem('inProgressRecipes', JSON.stringify(newList));
+      return newList;
+    });
+  };
+
   return (
     <div>
       <div>
@@ -73,10 +97,15 @@ export default function FoodInProgress() {
         {ingredientList.map((ingredient, index) => (
           <li
             key={ `${index}-${ingredient}` }
-            data-testid="ingredient-step"
+            data-testid={ `${index}-ingredient-step` }
           >
-            <label htmlFor={ ingredient }>
-              <input type="checkbox" id={ ingredient } />
+            <label htmlFor={ index }>
+              <input
+                type="checkbox"
+                id={ index }
+                checked={ isChecked[index] }
+                onChange={ ({ target }) => handleCheckBox(index, target.checked) }
+              />
               {`${ingredient} - ${measureList[index]}`}
             </label>
           </li>
