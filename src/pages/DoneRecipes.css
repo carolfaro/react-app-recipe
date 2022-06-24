@@ -1,4 +1,4 @@
-.done-rec-all {
+.done-rec-all, .drinks-all, .foods-all{
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -7,7 +7,7 @@
 }
 
 .done-rec-btns button {
-  height: 30px;
+  height: 35px;
   margin: 10px;
   width: 100px;
 }
