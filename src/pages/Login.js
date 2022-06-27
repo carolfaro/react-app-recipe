@@ -39,6 +39,8 @@ function Login() {
       <fieldset className="login-form">
         <legend>Login</legend>
 
+        <h1>APP de Receitas</h1>
+
         <label htmlFor="email">
           Email:
           <input
