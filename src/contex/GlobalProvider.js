@@ -5,7 +5,9 @@ import GlobalContext from './GlobalContext';
 function GlobalProvider({ children }) {
   const [inputSearchBar, setInputSearchBar] = useState('');
   const [radioValue, setRadioValue] = useState('');
-  const [returnAPI, setReturnAPI] = useState({});
+  const [returnAPI, setReturnAPI] = useState([]);
+  const [renderMealsState, setRenderMealsState] = useState([]);
+  const [renderDrinksState, setRenderDrinksState] = useState([]);
   const alert = 'Sorry, we haven\'t found any recipes for these filters.';
 
   const firstNameLetterMeal = async (letter) => {
@@ -145,6 +147,10 @@ function GlobalProvider({ children }) {
     buttonSearchBarDrinks,
     addRecipeToFavoriteList,
     verifyFavoriteRecipe,
+    renderMealsState,
+    setRenderMealsState,
+    renderDrinksState,
+    setRenderDrinksState,
   };
 
   return (

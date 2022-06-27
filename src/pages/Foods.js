@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import GlobalContext from '../contex/GlobalContext';
 import './Generic.css';
 
 function Foods() {
-  const [renderMealsState, setRenderMealsState] = useState([]);
+  const { setRenderMealsState, renderMealsState } = useContext(GlobalContext);
   const [categorysState, getCategorysState] = useState([]);
   const [selectedCat, setSelecterdCat] = useState('');
   const CINCO = 5;
