@@ -1,18 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function Favorites() {
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
   const [linkCopied, setLinkCopied] = useState(false);
+  const [isRecipeFavorite, setIsRecipeFavorite] = useState(false);
+  const [idFavorite, setIdFavorite] = useState('');
+  // se clicou vira true, muda o estado e altera o useeffect roda
 
   const handleShareBtn = (id) => {
     console.log(id);
     navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
     setLinkCopied(true);
   };
+
+  const favoriteBtn = (recipe) => {
+    if (recipe !== undefined) {
+      setIdFavorite(recipe);
+      const carol = favoriteRecipes.filter((ele) => ele.id !== recipe);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(carol));
+    }
+  };
+
+  useEffect(() => {
+    if (isRecipeFavorite) {
+      favoriteBtn();
+    }
+  }, [isRecipeFavorite]);
+
+  console.log(idFavorite);
 
   return (
     <div className="fav-all">
@@ -58,6 +76,7 @@ function Favorites() {
               </p>
               <button
                 type="button"
+                name={ recipe.id }
                 data-testid={ `${index}-horizontal-share-btn` }
                 onClick={ () => handleShareBtn(recipe.id) }
                 src={ shareIcon }
@@ -67,17 +86,15 @@ function Favorites() {
               {linkCopied && <span>Link copied!</span>}
               <button
                 type="button"
+                name={ recipe.id }
                 data-testid="0-horizontal-favorite-btn"
                 src={ blackHeartIcon }
+                onClick={ () => {
+                  favoriteBtn(recipe.id);
+                  setIsRecipeFavorite(!isRecipeFavorite);
+                } }
               >
                 <img src={ blackHeartIcon } alt="#" />
-              </button>
-              <button
-                type="button"
-                data-testid="0-horizontal-favorite-btn"
-                src={ blackHeartIcon }
-              >
-                <img src={ whiteHeartIcon } alt="#" />
               </button>
             </div>
           ) : (
@@ -111,15 +128,12 @@ function Favorites() {
                 type="button"
                 data-testid="1-horizontal-favorite-btn"
                 src={ blackHeartIcon }
+                onClick={ () => {
+                  favoriteBtn(recipe.id);
+                  setIsRecipeFavorite(!isRecipeFavorite);
+                } }
               >
                 <img src={ blackHeartIcon } alt="#" />
-              </button>
-              <button
-                type="button"
-                data-testid="1-horizontal-favorite-btn"
-                src={ blackHeartIcon }
-              >
-                <img src={ whiteHeartIcon } alt="#" />
               </button>
             </div>
           )
