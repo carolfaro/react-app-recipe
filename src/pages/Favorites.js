@@ -9,6 +9,7 @@ function Favorites() {
   const [isRecipeFavorite, setIsRecipeFavorite] = useState(false);
   const [idFavorite, setIdFavorite] = useState('');
   const [recipesToRender, setRecipesToRender] = useState([]);
+  const [filterRecipes, setFilterRecipes] = useState([]);
 
   const handleShareBtn = (id) => {
     navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
@@ -21,6 +22,21 @@ function Favorites() {
       const filteredRecipes = favoriteRecipes.filter((ele) => ele.id !== recipe);
       localStorage.setItem('favoriteRecipes', JSON.stringify(filteredRecipes));
       setRecipesToRender(filteredRecipes);
+      setFilterRecipes(filteredRecipes);
+    }
+  };
+
+  const handleFilterButtons = (type) => {
+    if (type === 'Food') {
+      const filteredFood = filterRecipes.filter((ele) => ele.type === 'food');
+      setRecipesToRender(filteredFood);
+    }
+    if (type === 'Drink') {
+      const filteredDrinks = filterRecipes.filter((ele) => ele.type === 'drink');
+      setRecipesToRender(filteredDrinks);
+    }
+    if (type === 'All') {
+      setRecipesToRender(filterRecipes);
     }
   };
 
@@ -33,6 +49,7 @@ function Favorites() {
   useEffect(() => {
     if (favoriteRecipes !== undefined) {
       setRecipesToRender(favoriteRecipes);
+      setFilterRecipes(favoriteRecipes);
     }
   }, []);
 
@@ -46,6 +63,7 @@ function Favorites() {
         type="button"
         data-testid="filter-by-all-btn"
         id="All"
+        onClick={ ({ target }) => handleFilterButtons(target.id) }
       >
         All
       </button>
@@ -53,6 +71,7 @@ function Favorites() {
         type="button"
         data-testid="filter-by-food-btn"
         id="Food"
+        onClick={ ({ target }) => handleFilterButtons(target.id) }
       >
         Food
       </button>
@@ -60,6 +79,7 @@ function Favorites() {
         type="button"
         data-testid="filter-by-drink-btn"
         id="Drink"
+        onClick={ ({ target }) => handleFilterButtons(target.id) }
       >
         Drinks
       </button>
@@ -150,82 +170,3 @@ function Favorites() {
 }
 
 export default Favorites;
-
-// RASCUNHO
-/* <div>
-        <button
-          type="button"
-          data-testid="filter-by-all-btn"
-          id="All"
-        >
-          All
-        </button>
-        <button
-          type="button"
-          data-testid="filter-by-food-btn"
-          id="Food"
-        >
-          Food
-        </button>
-        <button
-          type="button"
-          data-testid="filter-by-drink-btn"
-          id="Drink"
-        >
-          Drinks
-        </button>
-      </div>
-      <div>
-        <img
-          src=""
-          alt=""
-          data-testid="0-horizontal-image"
-        />
-        <p data-testid="0-horizontal-name">name</p>
-        <p data-testid="0-horizontal-top-text">
-          alguma coisa
-        </p>
-
-        <button
-          type="button"
-          data-testid="0-horizontal-share-btn"
-          src=""
-        >
-          botão
-        </button>
-        <button
-          type="button"
-          data-testid="0-horizontal-favorite-btn"
-          src=""
-        >
-          <img src={ shareIcon } alt="share-icon" />
-          Favorite
-        </button>
-      </div>
-      <div className="done-rec-cards">
-        <img
-          className="done-rec-img"
-          src=""
-          alt=""
-          data-testid="1-horizontal-image"
-        />
-        <p data-testid="1-horizontal-name">nome</p>
-        <p data-testid="1-horizontal-top-text">
-          ALGUMA COISA
-        </p>
-        <button
-          type="button"
-          data-testid="1-horizontal-share-btn"
-          src=""
-        >
-          allgo
-        </button>
-        <button
-          type="button"
-          data-testid="1-horizontal-favorite-btn"
-          src=""
-        >
-          <img src="" alt="share-icon" />
-          Favorite
-        </button>
-      </div> */
