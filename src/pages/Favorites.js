@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -6,7 +6,13 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function Favorites() {
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
-  console.log(favoriteRecipes);
+  const [linkCopied, setLinkCopied] = useState(false);
+
+  const handleShareBtn = (id) => {
+    console.log(id);
+    navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
+    setLinkCopied(true);
+  };
 
   return (
     <div className="fav-all">
@@ -58,7 +64,7 @@ function Favorites() {
               >
                 <img src={ shareIcon } alt="share-icon" />
               </button>
-              {/* {linkCopied && <span>Link copied!</span>} */}
+              {linkCopied && <span>Link copied!</span>}
               <button
                 type="button"
                 data-testid="0-horizontal-favorite-btn"
@@ -95,12 +101,12 @@ function Favorites() {
               <button
                 type="button"
                 data-testid={ `${index}-horizontal-share-btn` }
-                // onClick={ () => handleShareBtn(recipe.id) }
+                onClick={ () => handleShareBtn(recipe.id) }
                 src={ shareIcon }
               >
                 <img src={ shareIcon } alt="share-icon" />
               </button>
-              {/* {linkCopied && <span>Link copied!</span>} */}
+              {linkCopied && <span>Link copied!</span>}
               <button
                 type="button"
                 data-testid="1-horizontal-favorite-btn"
