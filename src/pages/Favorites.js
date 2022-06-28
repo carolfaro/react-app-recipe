@@ -8,10 +8,9 @@ function Favorites() {
   const [linkCopied, setLinkCopied] = useState(false);
   const [isRecipeFavorite, setIsRecipeFavorite] = useState(false);
   const [idFavorite, setIdFavorite] = useState('');
-  // se clicou vira true, muda o estado e altera o useeffect roda
+  const [recipesToRender, setRecipesToRender] = useState([]);
 
   const handleShareBtn = (id) => {
-    console.log(id);
     navigator.clipboard.writeText(`http://localhost:3000/foods/${id}`);
     setLinkCopied(true);
   };
@@ -19,8 +18,9 @@ function Favorites() {
   const favoriteBtn = (recipe) => {
     if (recipe !== undefined) {
       setIdFavorite(recipe);
-      const carol = favoriteRecipes.filter((ele) => ele.id !== recipe);
-      localStorage.setItem('favoriteRecipes', JSON.stringify(carol));
+      const filteredRecipes = favoriteRecipes.filter((ele) => ele.id !== recipe);
+      localStorage.setItem('favoriteRecipes', JSON.stringify(filteredRecipes));
+      setRecipesToRender(filteredRecipes);
     }
   };
 
@@ -30,7 +30,14 @@ function Favorites() {
     }
   }, [isRecipeFavorite]);
 
+  useEffect(() => {
+    if (favoriteRecipes !== undefined) {
+      setRecipesToRender(favoriteRecipes);
+    }
+  }, []);
+
   console.log(idFavorite);
+  console.log(recipesToRender);
 
   return (
     <div className="fav-all">
@@ -56,7 +63,7 @@ function Favorites() {
       >
         Drinks
       </button>
-      {favoriteRecipes.map((recipe, index) => (
+      {recipesToRender.map((recipe, index) => (
         (recipe.type === 'food')
           ? (
             <div className="done-rec-cards" key={ index }>
